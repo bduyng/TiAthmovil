@@ -25,12 +25,12 @@ import athmovil_checkout
  */
 
 @objc(ComBduyngTiathmovilModule)
-class ComBduyngTiathmovilModule: TiModule {
+class ComBduyngTiathmovilModule: TiModule, UIApplicationDelegate {
   
   // MARK: Public constants
   
   @objc let ENV_DEV = AMEnvironment.development.rawValue
-
+  
   @objc let ENV_PROD = AMEnvironment.production.rawValue
   
   func moduleGUID() -> String {
@@ -40,10 +40,10 @@ class ComBduyngTiathmovilModule: TiModule {
   override func moduleId() -> String! {
     return "com.bduyng.tiathmovil"
   }
-
+  
   override func startup() {
     super.startup()
-    debugPrint("[DEBUG] \(self) loaded")
+    NSLog("[DEBUG] \(self) loaded")
   }
   
   func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -54,114 +54,113 @@ class ComBduyngTiathmovilModule: TiModule {
     }
     return true
   }
-    
+  
   @objc(configure:)
   func configure(arguments: Array<Any>?) {
+    NSLog("[DEBUG] in configure... ")
     guard let params = arguments?.first as? [String: Any],
       let publicToken = params["publicToken"] as? String,
       let callbackURL = params["callbackURL"] as? String
-    else {
-      if (self._hasListeners("error")) {
-        fireEvent("error", with: ["error": true, "method": "configure", "arguments": arguments! ])
-      }
-      return
+      else {
+        if (self._hasListeners("error")) {
+          fireEvent("error", with: ["error": true, "method": "configure", "arguments": arguments! ])
+        }
+        return
     }
-//    let environmentRawValue = (params["environment"] as? NSInteger) ?? ENV_PROD
+    //    let environmentRawValue = (params["environment"] as? NSInteger) ?? ENV_PROD
     
     
     do {
-      try ATHMCheckout.shared.configure(for: AMEnvironment.production,
+      try ATHMCheckout.shared.configure(for: AMEnvironment.development,
                                         with: publicToken,
                                         and: callbackURL)
+      ATHMCheckout.shared.publicToken = publicToken
+      ATHMCheckout.shared.callbackURL = callbackURL
+      ATHMCheckout.shared.timeout = 60
+      ATHMCheckout.shared.delegate = self
     } catch {
-        debugPrint(error.localizedDescription)
+      if (self._hasListeners("error")) {
+        fireEvent("error", with: ["error": true, "method": "configure", "message": error.localizedDescription ])
+      }
     }
-    ATHMCheckout.shared.publicToken = publicToken
-    ATHMCheckout.shared.timeout = 5
-    ATHMCheckout.shared.delegate = self
+    
+    
     
   }
   
   @objc(checkoutWithPayment:)
   func checkoutWithPayment(arguments: Array<Any>?) {
     guard let params = arguments?.first as? [String: Any],
-      let itemsParams = params["items"] as? [[String: Any]],
-      let total = params["total"] as? NSNumber,
-      let subtotal = params["subtotal"] as? NSNumber,
-      let tax = params["tax"] as? NSNumber
-    else {
-      if (self._hasListeners("error")) {
-        fireEvent("error", with: ["error": true, "method": "checkoutWithPayment", "arguments": arguments! ])
-      }
-      return
+      let total = params["total"] as? NSNumber
+      else {
+        if (self._hasListeners("error")) {
+          fireEvent("error", with: ["error": true, "method": "checkoutWithPayment", "arguments": arguments! ])
+        }
+        return
     }
-      
+    
+    let itemsParams = params["items"] as? [[String: Any]]
+    let subtotal = params["subtotal"] as? NSNumber
+    let tax = params["tax"] as? NSNumber
+    
     // create items
     var items: [ATHMPaymentItem] = []
-
-    for itemParam in itemsParams {
-      guard let item = try? ATHMPaymentItem(desc: itemParam["desc"] as! String,
-                                            name: itemParam["name"] as! String,
-                                            priceNumber: itemParam["price"] as! NSNumber,
-                                            quantity: itemParam["quantity"] as! Int) else { return }
-      items.append(item)
+    if (itemsParams != nil) {
+      for itemParam in itemsParams! {
+        guard let item = try? ATHMPaymentItem(desc: itemParam["desc"] as! String,
+                                              name: itemParam["name"] as! String,
+                                              priceNumber: itemParam["price"] as! NSNumber,
+                                              quantity: itemParam["quantity"] as! Int
+          ) else {
+            if (self._hasListeners("error")) {
+              fireEvent("error", with: ["error": true, "method": "checkoutWithPayment", "itemParam": itemParam ])
+            }
+            return
+        }
+        items.append(item)
+      }
     }
-
+    
     guard let payment = try? ATHMPayment(
       total: total,
       subtotal: subtotal,
       tax: tax,
-      items: items) else { return }
+      items: items
+      ) else { return }
     
     do {
       try ATHMCheckout.shared.checkout(with: payment)
     } catch {
-        debugPrint(error.localizedDescription)
-    }
-    
-  }
-
-//  @objc(example:)
-//  func example(arguments: Array<Any>?) -> String? {
-//    guard let arguments = arguments, let params = arguments[0] as? [String: Any] else { return nil }
-//
-//    // Example method.
-//    // Call with "MyModule.example({ hello: 'world' })"
-//
-//    return params["hello"] as? String
-//  }
-//
-//  @objc public var exampleProp: String {
-//     get {
-//        // Example property getter
-//        return "Titanium rocks!"
-//     }
-//     set {
-//        // Example property setter
-//        // Call with "MyModule.exampleProp = 'newValue'"
-//        self.replaceValue(newValue, forKey: "exampleProp", notification: false)
-//     }
-//   }
-}
-
-extension ComBduyngTiathmovilModule : AMCheckoutDelegate {
-    public func onCompletedPayment(referenceNumber: String?, total: NSNumber, tax: NSNumber?, subtotal: NSNumber?, metadata1: String?, metadata2: String?, items: [ATHMPaymentItem]?) {
-      if (self._hasListeners("success")) {
-        fireEvent("success", with: ["success": true])
+      if (self._hasListeners("error")) {
+        fireEvent("error", with: [
+          "error": true,
+          "method": "checkoutWithPayment",
+          "message": error.localizedDescription
+        ])
       }
     }
     
-    public func onCancelledPayment(referenceNumber: String?, total: NSNumber, tax: NSNumber?, subtotal: NSNumber?, metadata1: String?, metadata2: String?, items: [ATHMPaymentItem]?) {
-        if (self._hasListeners("cancelled")) {
-          fireEvent("cancelled", with: ["cancelled": true])
-        }
+  }
+}
+
+extension ComBduyngTiathmovilModule : AMCheckoutDelegate {
+  public func onCompletedPayment(referenceNumber: String?, total: NSNumber, tax: NSNumber?, subtotal: NSNumber?, metadata1: String?, metadata2: String?, items: [ATHMPaymentItem]?) {
+    if (self._hasListeners("success")) {
+      fireEvent("success", with: ["success": true])
     }
-    
-    public func onExpiredPayment(referenceNumber: String?, total: NSNumber, tax: NSNumber?, subtotal: NSNumber?, metadata1: String?, metadata2: String?, items: [ATHMPaymentItem]?) {
-        if (self._hasListeners("expired")) {
-          fireEvent("expired", with: ["expired": true])
-        }
+  }
+  
+  public func onCancelledPayment(referenceNumber: String?, total: NSNumber, tax: NSNumber?, subtotal: NSNumber?, metadata1: String?, metadata2: String?, items: [ATHMPaymentItem]?) {
+    if (self._hasListeners("cancelled")) {
+      fireEvent("cancelled", with: ["cancelled": true])
     }
-    
-    
+  }
+  
+  public func onExpiredPayment(referenceNumber: String?, total: NSNumber, tax: NSNumber?, subtotal: NSNumber?, metadata1: String?, metadata2: String?, items: [ATHMPaymentItem]?) {
+    if (self._hasListeners("error")) {
+      fireEvent("error", with: ["error": true, "expired": true])
+    }
+  }
+  
+  
 }

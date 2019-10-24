@@ -3,37 +3,55 @@
 // to test out the module and to provide instructions
 // to users on how to use it by example.
 
-
 // open a single window
 var win = Ti.UI.createWindow({
-	backgroundColor:'white'
+  backgroundColor: 'white'
 });
-var label = Ti.UI.createLabel();
-win.add(label);
-win.open();
 
 // TODO: write your module tests here
-var tiathmovil = require('com.bduyng.tiathmovil');
-Ti.API.info("module is => " + tiathmovil);
+var TiAthmovil = require('com.bduyng.tiathmovil');
+Ti.API.info('module is => ' + TiAthmovil);
 
-label.text = tiathmovil.example();
+TiAthmovil.addEventListener('error', function onError(e) {
+  console.error('Error', e);
+});
 
-Ti.API.info("module exampleProp is => " + tiathmovil.exampleProp);
-tiathmovil.exampleProp = "This is a test value";
+TiAthmovil.addEventListener('cancelled', function onCancelled(e) {
+  Ti.API.warn('Cancelled', e);
+});
 
-if (Ti.Platform.name == "android") {
-	var proxy = tiathmovil.createExample({
-		message: "Creating an example Proxy",
-		backgroundColor: "red",
-		width: 100,
-		height: 100,
-		top: 100,
-		left: 150
-	});
+TiAthmovil.addEventListener('success', function onSuccess(e) {
+  console.error('Success');
+  console.error(e);
+});
 
-	proxy.printMessage("Hello world!");
-	proxy.message = "Hi world!.  It's me again.";
-	proxy.printMessage("Hello world!");
-	win.add(proxy);
-}
+TiAthmovil.configure({
+  publicToken: 'KAZ2EOUJ0EVGXFDOCKY68TOUKVVN0C8G0TH92F81',
+  callbackURL: 'athm-checkout'
+});
+console.log(TiAthmovil.createCheckoutButton);
+var checkoutButton = TiAthmovil.createCheckoutButton({
+  width: 300,
+  height: 44
+});
+checkoutButton.addEventListener('frameSizeChanged', function(e) {
+  console.log(e);
+});
+checkoutButton.addEventListener('click', function() {
+  TiAthmovil.checkoutWithPayment({
+    items: [
+      {
+        desc: 'description',
+        name: 'name',
+        price: 15,
+        quantity: 1
+      }
+    ],
+    subtotal: 10,
+    tax: 10,
+    total: 10
+  });
+});
+win.add(checkoutButton);
 
+win.open();

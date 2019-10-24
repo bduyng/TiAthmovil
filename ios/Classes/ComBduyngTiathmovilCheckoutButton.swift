@@ -9,29 +9,41 @@ import Foundation
 import TitaniumKit
 import athmovil_checkout
 
-@objc(ComBduyngTiathmovilButton)
+@objc(ComBduyngTiathmovilCheckoutButton)
 class ComBduyngTiathmovilCheckoutButton: TiUIView {
-    var checkoutButton: ATHMCheckoutButton?
+    var checkoutButton: ATHMCheckoutButton
     
-    public override func initializeState() {
+    override init(frame: CGRect) {
+      checkoutButton = ATHMCheckoutButton()
+      super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+      checkoutButton = ATHMCheckoutButton()
+      super.init(coder: aDecoder)
+    }
+    
+    override func initializeState() {
+        NSLog("[DEBUG] in initializeState... ")
         super.initializeState()
-        
         checkoutButton = ATHMCheckout.shared.getCheckoutButton(withTarget: self, action: #selector(payWithATHMButtonPressed))
-        checkoutButton?.style = .original
-        
-        self.addSubview(checkoutButton!)
+        checkoutButton.frame = self.bounds
+        checkoutButton.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        checkoutButton.style = .original
+
+        self.addSubview(checkoutButton)
     }
     
     public override func frameSizeChanged(_ frame: CGRect, bounds: CGRect) {
-        for child in checkoutButton!.subviews {
-            TiUtils.setView(child, positionRect: bounds)
-        }
-        
         super.frameSizeChanged(frame, bounds: bounds)
+        
+        TiUtils.setView(checkoutButton, positionRect: bounds)
     }
     
     @objc func payWithATHMButtonPressed() {
-        proxy.fireEvent("click")
+        if (proxy._hasListeners("click")) {
+            proxy.fireEvent("click")
+        }
     }
     
 }
