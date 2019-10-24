@@ -1,0 +1,11 @@
+framework module ComBduyngTiathmovil {
+  umbrella header "ComBduyngTiathmovil.h"
+
+  export *
+  module * { export * }
+}
+
+module ComBduyngTiathmovil.Swift {
+    header "ComBduyngTiathmovil-Swift.h"
+    requires objc
+}
