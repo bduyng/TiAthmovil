@@ -43,16 +43,25 @@ class ComBduyngTiathmovilModule: TiModule, UIApplicationDelegate {
   
   override func startup() {
     super.startup()
-    NSLog("[DEBUG] \(self) loaded")
+    debugPrint("[DEBUG] \(self) loaded")
   }
   
-  func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-    do {
-      try ATHMCheckout.shared.handleIncomingURL(url: url)
-    } catch let error {
-      debugPrint(error)
+  @objc func handleIncomingURLWithUrl(notification: NSNotification) {
+    guard let urlString = notification.userInfo?["url"] as? String else {
+      return
     }
-    return true
+    
+//    let alert = UIAlertController(title: "DEBUG", message: urlString, preferredStyle: UIAlertController.Style.alert)
+//    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+//    TiApp.controller().topPresentedController().present(alert, animated: true, completion: nil)
+    
+    do {
+      try ATHMCheckout.shared.handleIncomingURL(url: URL(string: urlString)!)
+    } catch let error {
+      if (self._hasListeners("error")) {
+        fireEvent("error", with: ["error": true, "method": "handleIncomingURLWithUrl", "message": error.localizedDescription ])
+      }
+    }
   }
   
   @objc(configure:)
@@ -60,32 +69,32 @@ class ComBduyngTiathmovilModule: TiModule, UIApplicationDelegate {
     NSLog("[DEBUG] in configure... ")
     guard let params = arguments?.first as? [String: Any],
       let publicToken = params["publicToken"] as? String,
-      let callbackURL = params["callbackURL"] as? String
+      let callbackURL = params["callbackURL"] as? String,
+      let environment = (params["environment"] as? String)
       else {
         if (self._hasListeners("error")) {
           fireEvent("error", with: ["error": true, "method": "configure", "arguments": arguments! ])
         }
         return
     }
-    //    let environmentRawValue = (params["environment"] as? NSInteger) ?? ENV_PROD
     
     
     do {
-      try ATHMCheckout.shared.configure(for: AMEnvironment.development,
+      try ATHMCheckout.shared.configure(for: environment == "dev" ? AMEnvironment.development : AMEnvironment.production,
                                         with: publicToken,
                                         and: callbackURL)
       ATHMCheckout.shared.publicToken = publicToken
       ATHMCheckout.shared.callbackURL = callbackURL
       ATHMCheckout.shared.timeout = 60
       ATHMCheckout.shared.delegate = self
+      let nc = NotificationCenter.default
+      nc.addObserver(self, selector: #selector(self.handleIncomingURLWithUrl), name: NSNotification.Name(rawValue: kTiApplicationLaunchedFromURL), object: nil)
+      
     } catch {
       if (self._hasListeners("error")) {
         fireEvent("error", with: ["error": true, "method": "configure", "message": error.localizedDescription ])
       }
     }
-    
-    
-    
   }
   
   @objc(checkoutWithPayment:)
@@ -143,7 +152,7 @@ class ComBduyngTiathmovilModule: TiModule, UIApplicationDelegate {
   }
 }
 
-extension ComBduyngTiathmovilModule : AMCheckoutDelegate {
+extension ComBduyngTiathmovilModule: AMCheckoutDelegate {
   public func onCompletedPayment(referenceNumber: String?, total: NSNumber, tax: NSNumber?, subtotal: NSNumber?, metadata1: String?, metadata2: String?, items: [ATHMPaymentItem]?) {
     if (self._hasListeners("success")) {
       fireEvent("success", with: ["success": true])

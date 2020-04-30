@@ -1,0 +1,166 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.2.2 (swiftlang-1103.0.32.6 clang-1103.0.32.51)
+// swift-module-flags: -target armv7-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name athmovil_checkout
+import Foundation
+import Swift
+@_exported import athmovil_checkout
+@objc public enum AMCheckoutButtonStyle : ObjectiveC.NSInteger, Swift.RawRepresentable {
+  case original
+  case light
+  case dark
+  public typealias RawValue = ObjectiveC.NSInteger
+  public init?(rawValue: ObjectiveC.NSInteger)
+  public var rawValue: ObjectiveC.NSInteger {
+    get
+  }
+}
+extension AMCheckoutButtonStyle {
+  public var bgColor: UIKit.UIColor {
+    get
+  }
+  public var textColor: UIKit.UIColor {
+    get
+  }
+  public func image(lang: athmovil_checkout.AMLanguage) -> UIKit.UIImage?
+  public var name: Swift.String {
+    get
+  }
+}
+@objc public enum AMLanguage : ObjectiveC.NSInteger, Swift.RawRepresentable {
+  case en
+  case es
+  public typealias RawValue = ObjectiveC.NSInteger
+  public init?(rawValue: ObjectiveC.NSInteger)
+  public var rawValue: ObjectiveC.NSInteger {
+    get
+  }
+}
+extension AMLanguage {
+  public var subFix: Swift.String {
+    get
+  }
+}
+@objc public enum AMEnvironment : ObjectiveC.NSInteger, Swift.RawRepresentable {
+  case development
+  case production
+  public typealias RawValue = ObjectiveC.NSInteger
+  public init?(rawValue: ObjectiveC.NSInteger)
+  public var rawValue: ObjectiveC.NSInteger {
+    get
+  }
+}
+@objc public protocol AMCheckoutDelegate : ObjectiveC.NSObjectProtocol {
+  @objc func onCompletedPayment(referenceNumber: Swift.String?, total: Foundation.NSNumber, tax: Foundation.NSNumber?, subtotal: Foundation.NSNumber?, metadata1: Swift.String?, metadata2: Swift.String?, items: [athmovil_checkout.ATHMPaymentItem]?)
+  @objc func onCancelledPayment(referenceNumber: Swift.String?, total: Foundation.NSNumber, tax: Foundation.NSNumber?, subtotal: Foundation.NSNumber?, metadata1: Swift.String?, metadata2: Swift.String?, items: [athmovil_checkout.ATHMPaymentItem]?)
+  @objc func onExpiredPayment(referenceNumber: Swift.String?, total: Foundation.NSNumber, tax: Foundation.NSNumber?, subtotal: Foundation.NSNumber?, metadata1: Swift.String?, metadata2: Swift.String?, items: [athmovil_checkout.ATHMPaymentItem]?)
+}
+public enum AMErrorType : Swift.String, Swift.Error {
+  case requiredURLQueryNotFound
+  case malformedURLException
+  case decodingJSONException
+  case requiredJSONPropertiesNotFound
+  case decodingDataException
+  case encodingJSONException
+  case apiTokenOrCallbackURLNotProvided
+  case paymentCanceled
+  case paymentFailed
+  case transactionExpired
+  case timeoutOutOfRange
+  case businessNotAvailable
+  case specialCharactersNotAllowed
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class ATHMCheckout : ObjectiveC.NSObject {
+  @objc public static let shared: athmovil_checkout.ATHMCheckout
+  public var env: athmovil_checkout.AMEnvironment
+  public var publicToken: Swift.String?
+  public var callbackURL: Swift.String?
+  public var lang: athmovil_checkout.AMLanguage
+  public var theme: athmovil_checkout.AMCheckoutButtonStyle
+  public typealias Seconds = Swift.Double
+  @objc public var timeout: athmovil_checkout.ATHMCheckout.Seconds {
+    @objc get
+    @objc set
+  }
+  @objc public var delegate: athmovil_checkout.AMCheckoutDelegate?
+  @objc public func configure(for env: athmovil_checkout.AMEnvironment, with publicToken: Swift.String, and callbackURL: Swift.String) throws
+  @objc public func getCheckoutButton(withTarget target: Any, action: ObjectiveC.Selector) -> athmovil_checkout.ATHMCheckoutButton
+  @objc public func handleIncomingURL(url: Foundation.URL) throws
+  @objc public func checkout(with payment: athmovil_checkout.ATHMPayment) throws
+  @objc deinit
+}
+@objc @objcMembers public class ATHMPayment : ObjectiveC.NSObject {
+  @objc public var total: Foundation.NSNumber
+  @objc public var subtotal: Foundation.NSNumber?
+  @objc public var tax: Foundation.NSNumber?
+  @objc public var metadata1: Swift.String?
+  @objc public var metadata2: Swift.String?
+  @objc public var items: [athmovil_checkout.ATHMPaymentItem]?
+  @objc public init(total: Foundation.NSNumber, subtotal: Foundation.NSNumber? = nil, tax: Foundation.NSNumber? = nil, metadata1: Swift.String? = nil, metadata2: Swift.String? = nil, items: [athmovil_checkout.ATHMPaymentItem]? = nil) throws
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc extension ATHMPayment {
+  @objc dynamic public var toDictionary: [Swift.String : Any]? {
+    @objc get
+  }
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class ATHMCheckoutButton : UIKit.UIButton {
+  @objc public var lang: athmovil_checkout.AMLanguage {
+    @objc get
+    @objc set
+  }
+  @objc public var style: athmovil_checkout.AMCheckoutButtonStyle {
+    @objc get
+    @objc set
+  }
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc public func fitToSuperview()
+  @objc deinit
+}
+@objc @objcMembers public class ATHMPaymentItem : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let desc: Swift.String
+  @objc final public let name: Swift.String
+  @objc public var quantity: Swift.Int
+  @objc public var metadata: Swift.String?
+  @objc public init(desc: Swift.String, name: Swift.String, priceNumber: Foundation.NSNumber, quantity: Swift.Int, metadata: Swift.String? = nil) throws
+  @objc deinit
+  @objc override dynamic public init()
+  required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension ATHMPaymentItem {
+  @objc dynamic public var price: Foundation.NSNumber {
+    @objc get
+    @objc set
+  }
+}
+public enum ATHMStatus : Swift.String, Swift.Codable {
+  case success
+  case unavailable
+  case canceled
+  case noActiveCards
+  case timeout
+  case other
+  public init(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension athmovil_checkout.AMCheckoutButtonStyle : Swift.Equatable {}
+extension athmovil_checkout.AMCheckoutButtonStyle : Swift.Hashable {}
+extension athmovil_checkout.AMLanguage : Swift.Equatable {}
+extension athmovil_checkout.AMLanguage : Swift.Hashable {}
+extension athmovil_checkout.AMEnvironment : Swift.Equatable {}
+extension athmovil_checkout.AMEnvironment : Swift.Hashable {}
+extension athmovil_checkout.AMErrorType : Swift.Equatable {}
+extension athmovil_checkout.AMErrorType : Swift.Hashable {}
+extension athmovil_checkout.AMErrorType : Swift.RawRepresentable {}
+extension athmovil_checkout.ATHMStatus : Swift.Equatable {}
+extension athmovil_checkout.ATHMStatus : Swift.Hashable {}
+extension athmovil_checkout.ATHMStatus : Swift.RawRepresentable {}

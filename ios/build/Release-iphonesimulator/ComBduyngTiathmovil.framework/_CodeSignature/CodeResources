@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/ComBduyngTiathmovil-Swift.h</key>
 		<data>
-		OYaraynyYiOlSAMb1B+x13kOBN8=
+		Pd1g6vnWJ+3O+yHz6YVajWeZYEc=
 		</data>
 		<key>Headers/ComBduyngTiathmovil.h</key>
 		<data>
@@ -18,23 +18,23 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		YHK6zMLRxvDbh7NHW79c5oUW5SU=
+		fhRJhF68Z6ExMnsAeTh8otF45ME=
 		</data>
 		<key>Modules/ComBduyngTiathmovil.swiftmodule/i386.swiftdoc</key>
 		<data>
-		RzBYkbVdZF703n/IPx6H/9onA98=
+		t8sLrle5qxlI19VIABBkJDrDgQM=
 		</data>
 		<key>Modules/ComBduyngTiathmovil.swiftmodule/i386.swiftmodule</key>
 		<data>
-		7GP6BCOtXhBngkhVfJ/6E0v52e8=
+		kobyH/4S7AvR3nHkEOB46hMaqPA=
 		</data>
 		<key>Modules/ComBduyngTiathmovil.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		B4PbdBk7mJFiGN7ub2japLczWCw=
+		F709/YtjLK105C9bArVGhq5fTYU=
 		</data>
 		<key>Modules/ComBduyngTiathmovil.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		zlBYWiBaaNwymX2DhRc8aAnEJlo=
+		DE+uNqiPtyZ9rxop2MJjr3xZk9I=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -47,11 +47,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			OYaraynyYiOlSAMb1B+x13kOBN8=
+			Pd1g6vnWJ+3O+yHz6YVajWeZYEc=
 			</data>
 			<key>hash2</key>
 			<data>
-			SaUl0KiNusEsXAlJaWeqg3nqQaxZyJ6oEJK29YYb+6I=
+			2Zej5lySO8O8itgQDDC2pPh7byYu11ebPUgPOTxWAGY=
 			</data>
 		</dict>
 		<key>Headers/ComBduyngTiathmovil.h</key>
@@ -80,44 +80,44 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			RzBYkbVdZF703n/IPx6H/9onA98=
+			t8sLrle5qxlI19VIABBkJDrDgQM=
 			</data>
 			<key>hash2</key>
 			<data>
-			/6p7/OHpKNNl6hpqdIBO487kXq21nImvWtsjn7iZQiI=
+			I7xYcqUsu1hdmIcWHvtporXeeb0t8lyrJ/kkO4m8wFs=
 			</data>
 		</dict>
 		<key>Modules/ComBduyngTiathmovil.swiftmodule/i386.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			7GP6BCOtXhBngkhVfJ/6E0v52e8=
+			kobyH/4S7AvR3nHkEOB46hMaqPA=
 			</data>
 			<key>hash2</key>
 			<data>
-			BwjYX6n3hAqSjlt7I9Y+1F69zIzOxPuKYraxzPxxmGo=
+			HCLcxOj0646h3ZFlFD6OOy7nXrz0sIBkyAt3MJr2mEw=
 			</data>
 		</dict>
 		<key>Modules/ComBduyngTiathmovil.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			B4PbdBk7mJFiGN7ub2japLczWCw=
+			F709/YtjLK105C9bArVGhq5fTYU=
 			</data>
 			<key>hash2</key>
 			<data>
-			q1LiARzC+jzpzPyowt+afdDWwf+lxTVQRjhHLynenfE=
+			L32k71kGgq29h9y5a2tOi5YlHKc7BX6/6rGHiMDf9tQ=
 			</data>
 		</dict>
 		<key>Modules/ComBduyngTiathmovil.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			zlBYWiBaaNwymX2DhRc8aAnEJlo=
+			DE+uNqiPtyZ9rxop2MJjr3xZk9I=
 			</data>
 			<key>hash2</key>
 			<data>
-			f6ZDbOAPHC3OJYnfUuiUBSYXTtfcfPDMmy6buhhv01E=
+			mrLM9fLontBboJdrmMMzYRSZCF6x7cGl7vFDBzWvh2o=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

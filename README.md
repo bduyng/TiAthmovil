@@ -93,7 +93,7 @@ MyModule.foo();
 To test your module with the example, use:
 
 ```js
-appc run -p [ios|android]
+cd ios && ti build -p ios --build-only && cd .. && cp ios/dist/com.bduyng.tiathmovil-iphone-1.0.0.zip testing/com.bduyng.tiathmovil-iphone-1.0.0.zip && cd testing && ti build -p ios && cd ..
 ```
 
 This will execute the app.js in the example/ folder as a Titanium application.
