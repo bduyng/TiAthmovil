@@ -103,7 +103,7 @@ class ComBduyngTiathmovilModule: TiModule, UIApplicationDelegate {
       let total = params["total"] as? NSNumber
       else {
         if (self._hasListeners("error")) {
-          fireEvent("error", with: ["error": true, "method": "checkoutWithPayment", "arguments": arguments! ])
+          fireEvent("error", with: ["error": true, "method": "checkoutWithPayment", "arguments": arguments!, "message": "No total field" ])
         }
         return
     }
