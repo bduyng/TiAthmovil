@@ -4,8 +4,8 @@ This is a skeleton Titanium Mobile Mobile module project.
 
 ## Module Naming
 
-Choose a unique module id for your module.  This ID usually follows a namespace
-convention using DNS notation.  For example, com.appcelerator.module.test.  This
+Choose a unique module id for your module. This ID usually follows a namespace
+convention using DNS notation. For example, com.appcelerator.module.test. This
 ID can only be used once by all public modules in Titanium.
 
 ## Getting Started
@@ -17,7 +17,8 @@ ID can only be used once by all public modules in Titanium.
 5. Code and build.
 
 ## Documentation
------------------------------
+
+---
 
 You should provide at least minimal documentation for your module in `documentation` folder using the Markdown syntax.
 
@@ -38,7 +39,7 @@ Simply run `appc run -p [ios|android] --build-only` which will compile and packa
 
 You can use `clang` to lint your code. A default Axway linting style is included inside the module main folder.
 Run `clang-format -style=file -i SRC_FILE` in the module root to lint the `SRC_FILE`. You can also patterns,
-like `clang-format -style=file -i Classes/*` 
+like `clang-format -style=file -i Classes/*`
 
 ## Install
 
@@ -56,6 +57,7 @@ Copy the distribution zip file into the `~/Library/Application Support/Titanium`
 Copy the distribution zip file into the `~/.titanium` folder
 
 ### Windows
+
 Copy the distribution zip file into the `C:\ProgramData\Titanium` folder
 
 ## Project Usage
@@ -93,7 +95,7 @@ MyModule.foo();
 To test your module with the example, use:
 
 ```js
-cd ios && ti build -p ios --build-only && cd .. && cp ios/dist/com.bduyng.tiathmovil-iphone-1.0.0.zip testing/com.bduyng.tiathmovil-iphone-1.0.0.zip && cd testing && ti build -p ios && cd ..
+ti build -p ios --build-only --project-dir ./ios && cp ios/dist/com.bduyng.tiathmovil-iphone-1.0.1.zip testing/com.bduyng.tiathmovil-iphone-1.0.1.zip && cd testing && rm -rf modules && ti clean && ti build -p ios && cd ..
 ```
 
 This will execute the app.js in the example/ folder as a Titanium application.
@@ -101,6 +103,7 @@ This will execute the app.js in the example/ folder as a Titanium application.
 ## Distribution
 
 You have a variety of choises for distributing your module
+
 - [Gitt.io](http://gitt.io/)
 - [Axway Marketplace](https://marketplace.axway.com/home)
 

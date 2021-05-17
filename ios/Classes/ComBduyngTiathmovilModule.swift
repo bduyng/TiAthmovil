@@ -155,7 +155,7 @@ class ComBduyngTiathmovilModule: TiModule, UIApplicationDelegate {
 extension ComBduyngTiathmovilModule: AMCheckoutDelegate {
   public func onCompletedPayment(referenceNumber: String?, total: NSNumber, tax: NSNumber?, subtotal: NSNumber?, metadata1: String?, metadata2: String?, items: [ATHMPaymentItem]?) {
     if (self._hasListeners("success")) {
-      fireEvent("success", with: ["success": true])
+      fireEvent("success", with: ["success": true, "method": "onCompletedPayment", "referenceNumber": referenceNumber, "total": total, "tax": tax, "subtotal": subtotal, "metadata1": metadata1, "metadata2": metadata2 ])
     }
   }
   

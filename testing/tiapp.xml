@@ -65,5 +65,5 @@
 		<target device="ipad">false</target>
 		<target device="iphone">true</target>
 	</deployment-targets>
-	<sdk-version>8.2.0.GA</sdk-version>
+	<sdk-version>9.3.2.GA</sdk-version>
 </ti:app>

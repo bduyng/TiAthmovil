@@ -17,6 +17,7 @@
 		E1233DE32361628200F15E18 /* athmovil_checkout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1233DE22361628200F15E18 /* athmovil_checkout.framework */; };
 		E1233DE52361698500F15E18 /* ComBduyngTiathmovilCheckoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1233DE42361698500F15E18 /* ComBduyngTiathmovilCheckoutButton.swift */; };
 		E1233DE723617F7400F15E18 /* ComBduyngTiathmovilCheckoutButtonProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1233DE623617F7400F15E18 /* ComBduyngTiathmovilCheckoutButtonProxy.swift */; };
+		000000000000000000000002 /* TitaniumKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 000000000000000000000001 /* TitaniumKit.xcframework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		E1233DE22361628200F15E18 /* athmovil_checkout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = athmovil_checkout.framework; path = platform/athmovil_checkout.framework; sourceTree = "<group>"; };
 		E1233DE42361698500F15E18 /* ComBduyngTiathmovilCheckoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ComBduyngTiathmovilCheckoutButton.swift; path = Classes/ComBduyngTiathmovilCheckoutButton.swift; sourceTree = "<group>"; };
 		E1233DE623617F7400F15E18 /* ComBduyngTiathmovilCheckoutButtonProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ComBduyngTiathmovilCheckoutButtonProxy.swift; path = Classes/ComBduyngTiathmovilCheckoutButtonProxy.swift; sourceTree = "<group>"; };
+		000000000000000000000001 /* TitaniumKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "TitaniumKit.xcframework"; path = "$(TITANIUM_SDK)/iphone/Frameworks/TitaniumKit.xcframework"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +44,7 @@
 				DBB66221208481A800EAD6D9 /* TitaniumKit.framework in Frameworks */,
 				DB34CDE6207B9EBD005F8E8C /* Foundation.framework in Frameworks */,
 				E1233DE32361628200F15E18 /* athmovil_checkout.framework in Frameworks */,
+				000000000000000000000002 /* TitaniumKit.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +79,7 @@
 			children = (
 				E1233DE22361628200F15E18 /* athmovil_checkout.framework */,
 				DB34CDE5207B9EBD005F8E8C /* Foundation.framework */,
+				000000000000000000000001 /* TitaniumKit.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -160,7 +164,7 @@
 				TargetAttributes = {
 					DB52E2291E9CCD7000AAAEE0 = {
 						CreatedOnToolsVersion = 8.3;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 940;
 						ProvisioningStyle = Automatic;
 					};
 				};
